@@ -1,7 +1,15 @@
 ## Screenshots viewer
 
-The screenshots in German are getting generated on a regular basis, each time there is a sync with Localazy. You can open the
-page [index.html](./index.html) in a browser to see the screenshots in English, and their translations into German.
+The screenshots in German are getting generated on a regular basis, each time there is a sync with Localazy. The English
+screenshots are loaded from `../tests/uitests/src/test/snapshots/images`.
+
+Because the gallery uses JavaScript modules, open it over HTTP rather than as a `file://` page. From the repository root, run:
+
+```bash
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+
+Then open <http://127.0.0.1:8000/screenshots/>. Stop the server with `Ctrl+C` when finished.
 
 ## Generate screenshots for other languages
 

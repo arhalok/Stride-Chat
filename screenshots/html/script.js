@@ -14,14 +14,12 @@ const URL_PARAM_IF_MODIFIED_AFTER = "d";
 
 // Get the base url of the current page
 const baseUrl = window.location.href.split('/').slice(0, -1).join('/');
-// On localhost, get the English screenshots from the location `../tests/uitests/src/test/snapshots/images`
-const isLocalHost = window.location.hostname === "localhost"
-let englishBasePath
-if (isLocalHost) {
-  englishBasePath = `../tests/uitests/src/test/snapshots/images`
-} else {
-  englishBasePath = `en`
-}
+// Prefer repository test snapshots when they are available, including through forwarded local hosts.
+const localEnglishBasePath = `../tests/uitests/src/test/snapshots/images`;
+const englishProbe = `${baseUrl}/${localEnglishBasePath}/${screenshots[1][0]}.png`;
+const englishBasePath = await fetch(englishProbe, { method: "HEAD" })
+  .then(response => response.ok ? localEnglishBasePath : `en`)
+  .catch(() => `en`);
 
 const dataLanguages = screenshots[0];
 
